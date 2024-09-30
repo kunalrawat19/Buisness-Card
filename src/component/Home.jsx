@@ -1,116 +1,148 @@
-import React from 'react'
-import {useState, useEffect} from 'react';
-import Card from './Card';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-const Home = ({setCardData}) => {
-    const [name, setName] = useState('');
-    const [desc, setDesc] = useState('');
-    const [interests, setInterests] = useState([]);
-    const [linkedin, setLinkedin] = useState('');
-    const [twitter, setTwitter] = useState('');
-    const [num, setNum] = useState(1);
-    
-    
-    // Temporary state for delayed updates
-    const [interestInput, setInterestInput] = useState('');
-    const [tempName, setTempName] = useState('');
-    const [tempDesc, setTempDesc] = useState('');
-    const [tempLinkedin, setTempLinkedin] = useState('');
-    const [tempTwitter, setTempTwitter] = useState('');
-  
-    // Update states every 30 seconds for each input
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        setName(tempName);
-        setDesc(tempDesc);
-        setLinkedin(tempLinkedin);
-        setTwitter(tempTwitter);
-      }, 1000); // Update every 30 seconds
-  
-      // Cleanup interval on unmount
-      return () => clearInterval(intervalId);
-    }, [tempName, tempDesc, tempLinkedin, tempTwitter]); // Runs whenever temp values change
-  
-    const navigate = useNavigate();
 
-    const handleButtonClick = () => {
-      // Set the card data in App.js via setCardData
-      setCardData({
-        name,
-        desc,
-        interests, // Split interests by comma
-        linkedin,
-        twitter
-      });
-      // Navigate to /card
-      navigate('/card');
-    };
-    function nameHandler(e) {
-      setTempName(e.target.value); // Update temp state immediately
-    }
-  
-    function descHandler(e) {
-      setTempDesc(e.target.value); // Update temp state immediately
-    }
-  
-    function submitHandler(e) {
-       // Prevent default form submission
-      if (interestInput.trim().length > 0) {
-        setNum(num + 1);
-        setInterests([...interests, interestInput]); // Add interest to the list
-        setInterestInput(''); // Clear the input
-      }
-    }
-  
-    function linkedinHandler(e) {
-      setTempLinkedin(e.target.value); // Update temp state for LinkedIn
-    }
-  
-    function twitterHandler(e) {
-      setTempTwitter(e.target.value); // Update temp state for Twitter
-    }
-  
- 
-    
-    return (
-      <div className='m-auto ' >
-        <div className='m-auto mb-[1rem]'>
-          <label>
-            Your Name: <input value={tempName} type="text" onChange={nameHandler} />
-          </label>
-        </div>
-        
-        <div>
-          <label>
-            Description: <input value={tempDesc} type="text" onChange={descHandler} />
-          </label>
-        </div>
-        
-        <div>
-          <label>
-            Interests {num}: <input type="text" value={interestInput} onChange={(e) => setInterestInput(e.target.value)} />
-          </label>
-            <button onClick={submitHandler}>Submit</button>
-        </div>
-        
-        <div>
-          <label>
-            LinkedIn: <input type="text" value={tempLinkedin} onChange={linkedinHandler} />
-          </label>
-        </div>
-        
-        <div>
-          <label>
-            Twitter: <input type="text" value={tempTwitter} onChange={twitterHandler} />
-          </label>
-        </div>
-  
-        <div>
-          <button onClick={handleButtonClick}>Generate Card</button>
-        </div>
+const Home = ({ setCardData }) => {
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
+  const [interests, setInterests] = useState([]);
+  const [linkedin, setLinkedin] = useState('');
+  const [twitter, setTwitter] = useState('');
+  const [num, setNum] = useState(1);
 
+  const [interestInput, setInterestInput] = useState('');
+  const [tempName, setTempName] = useState('');
+  const [tempDesc, setTempDesc] = useState('');
+  const [tempLinkedin, setTempLinkedin] = useState('');
+  const [tempTwitter, setTempTwitter] = useState('');
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setName(tempName);
+      setDesc(tempDesc);
+      setLinkedin(tempLinkedin);
+      setTwitter(tempTwitter);
+    }, 1000); // Update every 30 seconds
+
+    return () => clearInterval(intervalId);
+  }, [tempName, tempDesc, tempLinkedin, tempTwitter]);
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    setCardData({
+      name,
+      desc,
+      interests,
+      linkedin,
+      twitter,
+    });
+    navigate('/card');
+  };
+
+  function nameHandler(e) {
+    setTempName(e.target.value);
+  }
+
+  function descHandler(e) {
+    setTempDesc(e.target.value);
+  }
+
+  function submitHandler(e) {
+    if (interestInput.trim().length > 0) {
+      setNum(num + 1);
+      setInterests([...interests, interestInput]);
+      setInterestInput('');
+    }
+  }
+
+  function linkedinHandler(e) {
+    setTempLinkedin(e.target.value);
+  }
+
+  function twitterHandler(e) {
+    setTempTwitter(e.target.value);
+  }
+
+  return (
+    <div className='max-w-md mx-auto  p-8   text-white' >
+      <h1 className='text-3xl font-bold text-gray-900 text-center mb-8 '>Create Your Card</h1>
+
+      <div className='mx-auto mb-[2rem]' >
+        <label className='block text-gray-700 text-sm font-bold mb-2 '>
+          Your Name:
+        </label>
+        <input
+          value={tempName}
+          type="text"
+          onChange={nameHandler}
+          className='w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Type here..."'
+        />
       </div>
-    );
+
+      <div className='mb-[2rem]'>
+        <label className='block text-gray-700 text-sm font-bold mb-2'>
+          Description:
+        </label>
+        <input
+          value={tempDesc}
+          type="text"
+          onChange={descHandler}
+          className='w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Type here...'
+        />
+      </div>
+
+      <div className='mb-[2rem]'>
+        <label className='block text-gray-700 text-sm font-bold mb-2'>
+          Interests {num}:
+        </label>
+        <input
+          type="text"
+          value={interestInput}
+          onChange={(e) => setInterestInput(e.target.value)}
+          className='w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Type here...'
+        />
+        <button
+          onClick={submitHandler}
+          className='mt-2 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors'
+        >
+          Add Interest
+        </button>
+      </div>
+
+      <div className='mb-[[2rem]'>
+        <label className='block text-gray-700 text-sm font-bold mb-2'>
+          LinkedIn:
+        </label>
+        <input
+          type="text"
+          value={tempLinkedin}
+          onChange={linkedinHandler}
+          className='w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Type here...'
+        />
+      </div>
+
+      <div className='mb-[2rem]'>
+        <label className='block text-gray-700 text-sm font-bold mb-2'>
+          Twitter:
+        </label>
+        <input
+          type="text"
+          value={tempTwitter}
+          onChange={twitterHandler}
+          className='w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Type here...'
+        />
+      </div>
+
+      <div className='text-center'>
+        <button
+          onClick={handleButtonClick}
+          className='w-full bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition-colors'
+        >
+          Generate Card
+        </button>
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
