@@ -5,14 +5,7 @@ const mongoose = require('mongoose');
 const { createCardSchema } =require('./type.js');
 const cors = require('cors'); // Use quotes around 'cors'
 
-const corsOptions = {
-  origin: ['https://business-card-backend-l7x7.onrender.com'], // Use quotes for the URL
-  methods: ['POST', 'GET'], // Use uppercase for HTTP methods
-  credentials: true // Allow credentials
-};
 
-// Use the CORS middleware in your Express app
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cors());
 const cardSchema = new mongoose.Schema({
