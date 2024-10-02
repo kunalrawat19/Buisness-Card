@@ -78,7 +78,7 @@ app.post('/cards', async (req, res) => {
   }
 });
 
-app.get('/', async(req, res) => {
+app.get('/card', async(req, res) => {
   try {
     const cards = await Card.find(); // Fetch all cards from the database
     res.status(200).send({
@@ -93,7 +93,11 @@ app.get('/', async(req, res) => {
     });
 }
 });
-
+app.get('/',(req,res)=>{
+  res.send({
+    message:"backend running succesfully"
+  })
+})
 app.delete('/cards/:id', async (req, res) => {
   const { id } = req.params; // Extract the ID from the request parameters
 
