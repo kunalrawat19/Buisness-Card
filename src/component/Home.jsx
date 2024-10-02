@@ -28,15 +28,44 @@ const Home = ({ setCardData }) => {
 
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
-    setCardData({
+  const handleButtonClick = async () => {
+    // Prepare the card data to be sent
+    const cardData = {
       name,
       desc,
       interests,
       linkedin,
       twitter,
-    });
-    navigate('/card');
+    };
+    setCardData(cardData);
+    try {
+      // Send a POST request to the backend
+      // console.log(JSON.stringify(cardData));
+      
+      const response = await fetch('http://localhost:3000/cards', {
+        method: 'POST', // HTTP method
+        headers: {
+          'Content-Type': 'application/json', // Specify the content type
+        },
+        body: JSON.stringify(cardData), // Convert the card data to JSON
+      });
+  
+      if (!response.ok) {
+        // Handle error response
+        const errorData = await response.json();
+        console.error('Error:', errorData.message);
+        alert('Error posting card: ' + errorData.message); // Display error message
+        return;
+      }
+  
+      // If successful, navigate to the /card route
+      const data = await response.json();
+      console.log('Card stored successfully!', data);
+      navigate('/card'); // Navigate to the /card page
+    } catch (error) {
+      console.error('Error posting card:', error);
+      alert('Error posting card: ' + error.message); // Display error message
+    }
   };
 
   function nameHandler(e) {
@@ -109,7 +138,7 @@ const Home = ({ setCardData }) => {
         </button>
       </div>
 
-      <div className='mb-[[2rem]'>
+      <div className='mb-[2rem]'>
         <label className='block text-gray-700 text-sm font-bold mb-2'>
           LinkedIn:
         </label>
