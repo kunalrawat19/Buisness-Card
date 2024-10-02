@@ -30,6 +30,7 @@ const cardSchema = new mongoose.Schema({
 
 // Model creation
 const Card = mongoose.model('Card', cardSchema);
+//comment added 
 
 mongoose.connect("mongodb://localhost:27017/BuisnessCardDatabase")
   .then(() => console.log('Connected to MongoDB'))
