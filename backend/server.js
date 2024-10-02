@@ -3,7 +3,12 @@ const app = express();
 const port = 3000;
 const mongoose = require('mongoose');
 const { createCardSchema } =require('./type.js');
-const cors = require('cors'); // Use quotes around 'cors'
+app.use(express.json());
+const corsOptions = {
+  origin: ['https://business-card-frontend.vercel.app'], // Your frontend URL
+  methods: ['POST', 'GET', 'DELETE'],
+  credentials: true
+}; // Use quotes around 'cors'
 
 
 app.use(express.json());
