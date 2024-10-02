@@ -45,7 +45,7 @@ const Home = ({ setCardData }) => {
       // Add this before making the POST request
       console.log(cardData);
       
-      const response = await fetch('http://localhost:3000/cards', {
+      const response = await fetch('https://buisness-card-backend-l7x7.onrender.com/cards', {
         method: 'POST', // HTTP method
         headers: {
           'Content-Type': 'application/json', // Specify the content type
