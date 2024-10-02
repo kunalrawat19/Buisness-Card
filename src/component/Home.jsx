@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = ({ setCardData }) => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  const [interests, setInterests] = useState([]);
+  const [interest, setInterests] = useState([]);
   const [linkedin, setLinkedin] = useState('');
   const [twitter, setTwitter] = useState('');
   const [num, setNum] = useState(1);
@@ -33,7 +33,7 @@ const Home = ({ setCardData }) => {
     const cardData = {
       name,
       desc,
-      interests,
+      interest,
       linkedin,
       twitter,
     };
@@ -41,6 +41,9 @@ const Home = ({ setCardData }) => {
     try {
       // Send a POST request to the backend
       // console.log(JSON.stringify(cardData));
+      // console.log(JSON.stringify(cardData));
+      // Add this before making the POST request
+      console.log(cardData);
       
       const response = await fetch('http://localhost:3000/cards', {
         method: 'POST', // HTTP method
@@ -49,7 +52,8 @@ const Home = ({ setCardData }) => {
         },
         body: JSON.stringify(cardData), // Convert the card data to JSON
       });
-  
+      
+      
       if (!response.ok) {
         // Handle error response
         const errorData = await response.json();
@@ -79,7 +83,7 @@ const Home = ({ setCardData }) => {
   function submitHandler(e) {
     if (interestInput.trim().length > 0) {
       setNum(num + 1);
-      setInterests([...interests, interestInput]);
+      setInterests([...interest, interestInput]);
       setInterestInput('');
     }
   }

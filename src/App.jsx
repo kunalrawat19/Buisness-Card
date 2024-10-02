@@ -10,7 +10,7 @@ function App() {
   const [cardData, setCardData] = useState({
     name: '',
     desc: '',
-    interests: [],
+    interest: [],
     linkedin: '',
     twitter: ''
   });

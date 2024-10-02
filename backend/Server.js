@@ -18,7 +18,8 @@ const cardSchema = new mongoose.Schema({
   interest: [{
     type: String,
     required: true,
-  }],
+  }
+],
   linkedin: {
     type: String,
   },
@@ -39,11 +40,13 @@ mongoose.connect("mongodb://localhost:27017/BuisnessCardDatabase")
 app.post('/cards', async (req, res) => {
   // Validate the request body against the schema
   const validationResult = createCardSchema.safeParse(req.body);
-
+  console.log(validationResult);
+  
   if (!validationResult.success) {
       // If validation fails, respond with errors
       return res.status(400).send({
-          message: 'Validation failed',
+          message: validationResult.error,
+          
           errors: validationResult.error.errors
       });
   }
