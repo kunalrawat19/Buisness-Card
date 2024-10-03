@@ -41,17 +41,15 @@ const Home = ({ setCardData }) => {
     try {
       // Send a POST request to the backend
       // console.log(JSON.stringify(cardData));
-      // console.log(JSON.stringify(cardData));
-      // Add this before making the POST request
-      console.log(cardData);
-      
-      const response = await fetch('http://localhost:3000/cards', {
+      // const API_URL = "https://business-card-backend-l7x7.onrender.com";
+      const response = await fetch('http://localhost:3000/cards', { 
         method: 'POST', // HTTP method
         headers: {
           'Content-Type': 'application/json', // Specify the content type
         },
         body: JSON.stringify(cardData), // Convert the card data to JSON
       });
+      console.log(response);
       
       
       if (!response.ok) {

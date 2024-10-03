@@ -5,6 +5,12 @@ const mongoose = require('mongoose');
 const { createCardSchema } =require('./type.js');
 const cors = require("cors");
 app.use(express.json());
+// const corsOptions = {
+//   origin: ['https://buisness-card-frontend.vercel.app/'], // Your frontend URL
+//   methods: ['POST', 'GET', 'DELETE'],
+//   credentials: true
+// };
+// app.use(cors(corsOptions));
 app.use(cors());
 const cardSchema = new mongoose.Schema({
   name: {
@@ -125,4 +131,6 @@ app.delete('/cards/:id', async (req, res) => {
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
+  console.log('https://business-card-backend-l7x7.onrender.com');
+  
 });
